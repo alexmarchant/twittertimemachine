@@ -38,7 +38,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "#"} Twitter Time Machine
+          %a.brand{:href => "#"}
           .container.nav-collapse
             %ul.nav
               / %li= link_to "Link1", "/path1"
@@ -47,17 +47,9 @@
           / /.nav-collapse
     .container
       .content
-        .row
-          .span9
-            = yield
-          .span3
-            .well.sidebar-nav
-            / /.well
-          / /span
-        / /row
-      / /content
+        = yield
       %footer
-        %p © Twitter Time Machine 2012
+        / %p © Twitter Time Machine 2012
     / /container
     /
       Le javascript

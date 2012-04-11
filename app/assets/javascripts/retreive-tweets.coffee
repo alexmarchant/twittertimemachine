@@ -1,7 +1,9 @@
 $ ->
-  $('#go-button').click ->
-    handle = $('#handle-input').val()
-    $('.span9').children().remove()
+  $('#loading-button').click ->
+    handle = $('#username').val()
+    setTitle()
+    clearPage()
+    setLoading()
     getTweets(handle)
     setupNav()
 
@@ -9,6 +11,15 @@ tweetdb = []
 page = 1
 yearsAndMonths = {}
 sortedTweets = {}
+
+setTitle = ->
+  $('a.brand').text("Twitter Time Machine")
+
+clearPage = ->
+  $('.row').children().remove()
+  
+setLoading = ->
+  $('.row').append("<div class='span12'><h1>Loading...</h1><p>Hang on, this might take a minute.</p></div>")
 
 getTweets = (handle) ->
   $.ajax
@@ -23,11 +34,18 @@ getTweets = (handle) ->
       else
         finishedGet()
     error: ->
+      console.log "error"
       finishedGet()
 
 finishedGet = ->
+  setFinishedHTML()
   parseDates()
   createTimeline()
+  clickFirstNav()
+  
+setFinishedHTML = ->
+  clearPage()
+  $('.row').append("<div class='span9'> </div><div class='span3'><div class='well sidebar-nav'></div></div>")
       
 parseDates = ->
   $.each tweetdb, (index, tweet) ->
@@ -60,7 +78,9 @@ createTimeline = ->
     years = yearGroup + years
   nav = "<ul class='nav nav-list'>" + years + "</ul>"
   $('.well.sidebar-nav').append(nav)
-  # parseTweets()
+  
+clickFirstNav = ->
+  $('ul.nav > li > a:first').click()
   
 setupNav = ->
   $('ul.nav > li > a').live 'click', ->

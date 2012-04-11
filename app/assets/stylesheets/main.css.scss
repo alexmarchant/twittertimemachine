@@ -8,3 +8,48 @@
 .tweet-well.active {
   display: block;
 }
+.jumbo {
+  text-align: center;
+}
+.jumbo h1 {
+  margin-top: 50px;
+  font-size: 81px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.jumbo p {
+  margin-top: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 300;
+}
+.jumbo .btn-large {
+  font-size: 20px;
+  font-weight: normal;
+  padding: 14px 24px;
+  margin-right: 10px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+#username-input {
+  margin-top: 30px;
+  padding-top: 30px;
+  font-size: 0px;
+  border-top: 1px solid #e5e5e5;
+  span {
+    width: 35px;
+    height: 35px;
+    font-size: 26px;
+    line-height: 35px;
+    margin-bottom: 9px;
+  }
+  input {
+    height: 35px;
+    font-size: 26px;
+    line-height: 35px;
+  }
+}
