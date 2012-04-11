@@ -1,19 +1,8 @@
 .row
   .span12.jumbo
     %h1 Twitter Time Machine
-    %p A simpler way to traverse your Tweets.
+    %p A simpler way to traverse your Twitter history.
     .input-prepend#username-input
       %span.add-on @
       = text_field_tag 'username', '', :class => 'span4'
     %button.btn.btn-large.btn-primary#loading-button Load Tweets
-  / .span9
-  /   %form.form-horizontal
-  /     %fieldset
-  /       .control-group
-  /         .controls
-  /           .input-prepend.input-append
-  /             %span.add-on @
-  /             %input.span2#handle-input{:type => 'text'}
-  /             %button.btn#go-button{:type => 'button'} Go!
-  / .span3
-  /   .well.sidebar-nav

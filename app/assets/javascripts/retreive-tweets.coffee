@@ -34,7 +34,6 @@ getTweets = (handle) ->
       else
         finishedGet()
     error: ->
-      console.log "error"
       finishedGet()
 
 finishedGet = ->
@@ -64,7 +63,6 @@ parseDates = ->
       sortedTweets[tweet.year][tweet.month].push(tweet)
       
 createTimeline = ->
-  console.log sortedTweets
   years = ""
   $.each sortedTweets, (year, months) ->
     yearGroup = "<li class='nav-header'>#{year}</li>"
