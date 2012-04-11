@@ -41,10 +41,6 @@
           %a.brand{:href => "#"}
           .container.nav-collapse
             %ul.nav
-              / %li= link_to "Link1", "/path1"
-              / %li= link_to "Link2", "/path2"
-              / %li= link_to "Link3", "/path3"
-          / /.nav-collapse
     .container
       .content
         = yield
@@ -55,10 +51,5 @@
         :plain
           <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://twittertimemachine.herokuapp.com" data-via="alex_marchant" data-count="none">Tweet</a>
           <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        / %p © Twitter Time Machine 2012
-    / /container
-    /
-      Le javascript
-      \==================================================
-    / Placed at the end of the document so the pages load faster
+
     = javascript_include_tag "application"

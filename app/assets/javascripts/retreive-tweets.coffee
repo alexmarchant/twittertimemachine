@@ -1,16 +1,17 @@
 $ ->
   $('#loading-button').click ->
-    handle = $('#username').val()
+    username = $('#username').val()
     setTitle()
     clearPage()
     setLoading()
-    getTweets(handle)
+    getTweets(username)
     setupNav()
 
 tweetdb = []
 page = 1
 yearsAndMonths = {}
 sortedTweets = {}
+errorTry = 0
 
 setTitle = ->
   $('a.brand').text("Twitter Time Machine")
@@ -21,20 +22,30 @@ clearPage = ->
 setLoading = ->
   $('.row').append("<div class='span12'><h1>Loading...</h1><p>Hang on, this might take a minute.</p></div>")
 
-getTweets = (handle) ->
-  $.ajax
-    url: "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{handle}&page=#{page}&count=200&include_rts=1"
+getTweets = (username) ->
+  req = $.ajax
+    url: "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{username}&page=#{page}&count=200&include_rts=1"
     dataType: "jsonp"
+    timeout : 10000
     success: (data) ->
       if data.length > 0
         $.each data, (index, tweet) ->
           tweetdb.push(tweet)
         page += 1
-        getTweets(handle)
+        getTweets(username)
       else
         finishedGet()
-    error: ->
+  
+  req.error ->
+    if errorTry < 3
+      errorTry += 1
+      getTweets(username)
+    else
+      alertError()
       finishedGet()
+        
+alertError = ->
+  alert "Looks like something went wrong, we'll compute what we have. Reload the page to try again."
 
 finishedGet = ->
   setFinishedHTML()
@@ -88,15 +99,3 @@ setupNav = ->
     href = $(@).attr('href')
     $(href).show()
     return false
-    
-parseTweets = ->
-  html = $('body').html()
-  refs = html.match(/@\w*/gmi)
-  $.each refs, (index, ref) ->
-    html = html.replace(ref, "<a href='http://www.twitter.com/#{ref}'>#{ref}</a>")
-  $('body').html(html)
-  # $('p:contains("@")').each ->
-  #   text = @.innerText
-  #   ref = text.match(/@\w*/)
-  #   text = text.replace(ref, "<a href='http://www.twitter.com/#{ref}'>#{ref}</a>")
-  #   @.innerHTML = text
