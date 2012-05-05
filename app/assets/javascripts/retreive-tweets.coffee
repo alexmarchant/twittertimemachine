@@ -58,22 +58,20 @@ setFinishedHTML = ->
   $('.row').append("<div class='span9'> </div><div class='span3'><div class='well sidebar-nav'></div></div>")
       
 parseDates = ->
-  $.each tweetdb, (index, tweet) ->
-    if tweet.created_at 
-      date = Date.parse(tweet.created_at)
-      console.log date, tweet
-      tweet.month = date.toString('MMMM')
-      tweet.monthNo = date.toString('M')
-      tweet.year = date.toString('yyyy')
-      if sortedTweets[tweet.year] and sortedTweets[tweet.year][tweet.month]
-        sortedTweets[tweet.year][tweet.month].push(tweet)
-      else if sortedTweets[tweet.year]
-        sortedTweets[tweet.year][tweet.month] = []
-        sortedTweets[tweet.year][tweet.month].push(tweet)
-      else
-        sortedTweets[tweet.year] = {}
-        sortedTweets[tweet.year][tweet.month] = []
-        sortedTweets[tweet.year][tweet.month].push(tweet)
+  $.each tweetdb, (index, tweet) -> 
+    date = moment(tweet.created_at)
+    tweet.month = date.format('MMMM')
+    tweet.monthNo = date.month()
+    tweet.year = date.year()
+    if sortedTweets[tweet.year] and sortedTweets[tweet.year][tweet.month]
+      sortedTweets[tweet.year][tweet.month].push(tweet)
+    else if sortedTweets[tweet.year]
+      sortedTweets[tweet.year][tweet.month] = []
+      sortedTweets[tweet.year][tweet.month].push(tweet)
+    else
+      sortedTweets[tweet.year] = {}
+      sortedTweets[tweet.year][tweet.month] = []
+      sortedTweets[tweet.year][tweet.month].push(tweet)
       
 createTimeline = ->
   years = ""
