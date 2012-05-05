@@ -59,19 +59,21 @@ setFinishedHTML = ->
       
 parseDates = ->
   $.each tweetdb, (index, tweet) ->
-    date = Date.parse(tweet.created_at)
-    tweet.month = date.toString('MMMM')
-    tweet.monthNo = date.toString('M')
-    tweet.year = date.toString('yyyy')
-    if sortedTweets[tweet.year] and sortedTweets[tweet.year][tweet.month]
-      sortedTweets[tweet.year][tweet.month].push(tweet)
-    else if sortedTweets[tweet.year]
-      sortedTweets[tweet.year][tweet.month] = []
-      sortedTweets[tweet.year][tweet.month].push(tweet)
-    else
-      sortedTweets[tweet.year] = {}
-      sortedTweets[tweet.year][tweet.month] = []
-      sortedTweets[tweet.year][tweet.month].push(tweet)
+    if tweet.created_at 
+      date = Date.parse(tweet.created_at)
+      console.log date, tweet
+      tweet.month = date.toString('MMMM')
+      tweet.monthNo = date.toString('M')
+      tweet.year = date.toString('yyyy')
+      if sortedTweets[tweet.year] and sortedTweets[tweet.year][tweet.month]
+        sortedTweets[tweet.year][tweet.month].push(tweet)
+      else if sortedTweets[tweet.year]
+        sortedTweets[tweet.year][tweet.month] = []
+        sortedTweets[tweet.year][tweet.month].push(tweet)
+      else
+        sortedTweets[tweet.year] = {}
+        sortedTweets[tweet.year][tweet.month] = []
+        sortedTweets[tweet.year][tweet.month].push(tweet)
       
 createTimeline = ->
   years = ""
@@ -99,3 +101,5 @@ setupNav = ->
     href = $(@).attr('href')
     $(href).show()
     return false
+
+window.tweetdb = tweetdb
