@@ -50,13 +50,24 @@ alertError = ->
 finishedGet = ->
   setFinishedHTML()
   parseDates()
+  parseUsernames()
   createTimeline()
   clickFirstNav()
   
 setFinishedHTML = ->
   clearPage()
   $('.row').append("<div class='span9'> </div><div class='span3'><div class='well sidebar-nav'></div></div>")
-      
+
+parseUsernames = ->
+  $.each tweetdb, (index, tweet) ->
+    regex = /@[A-Za-z0-9_]+/g
+    if regex.test(tweet.text)
+      matches = tweet.text.match(regex)
+      for match in matches
+        linkHTML = "<a href=\"http://www.twitter.com/#{match}\">#{match}</a>"
+        tweet.text = tweet.text.replace(match, linkHTML)
+        
+
 parseDates = ->
   $.each tweetdb, (index, tweet) -> 
     date = moment(tweet.created_at)
