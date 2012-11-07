@@ -51,6 +51,7 @@ finishedGet = ->
   setFinishedHTML()
   parseDates()
   parseUsernames()
+  parseLinks()
   createTimeline()
   clickFirstNav()
   
@@ -65,6 +66,15 @@ parseUsernames = ->
       matches = tweet.text.match(regex)
       for match in matches
         linkHTML = "<a href=\"http://www.twitter.com/#{match}\">#{match}</a>"
+        tweet.text = tweet.text.replace(match, linkHTML)
+        
+parseLinks = ->
+  $.each tweetdb, (index, tweet) ->
+    regex = /http:\/\/t.co\S+/g
+    if regex.test(tweet.text)
+      matches = tweet.text.match(regex)
+      for match in matches
+        linkHTML = "<a href=\"#{match}\">#{match}</a>"
         tweet.text = tweet.text.replace(match, linkHTML)
         
 
