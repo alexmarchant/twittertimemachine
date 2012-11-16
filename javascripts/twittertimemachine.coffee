@@ -6,6 +6,10 @@ $ ->
     setLoading()
     getTweets(username)
     setupNav()
+  $('input#username').live("keypress", (e) ->
+    if e.keyCode == 13
+      $('#loading-button').click()
+    )
 
 tweetdb = []
 page = 1
