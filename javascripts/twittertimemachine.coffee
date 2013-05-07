@@ -56,6 +56,7 @@ finishedGet = ->
   parseDates()
   parseUsernames()
   parseLinks()
+  sortDates()
   createTimeline()
   clickFirstNav()
   
@@ -80,10 +81,9 @@ parseLinks = ->
       for match in matches
         linkHTML = "<a href=\"#{match}\">#{match}</a>"
         tweet.text = tweet.text.replace(match, linkHTML)
-        
 
 parseDates = ->
-  $.each tweetdb, (index, tweet) -> 
+  $.each tweetdb, (index, tweet) ->
     date = moment(tweet.created_at)
     tweet.month = date.format('MMMM')
     tweet.monthNo = date.month()
@@ -97,10 +97,19 @@ parseDates = ->
       sortedTweets[tweet.year] = {}
       sortedTweets[tweet.year][tweet.month] = []
       sortedTweets[tweet.year][tweet.month].push(tweet)
+
+sortDates = ->
+  sortedArray = []
+  $.each sortedTweets, (year, months) ->
+    sortedArray.push([year, months])
+  sortedArray.sort (a,b) -> a[0] - b[0]
+  sortedTweets = sortedArray
       
 createTimeline = ->
   years = ""
-  $.each sortedTweets, (year, months) ->
+  $.each sortedTweets, (index, yearData) ->
+    year = yearData[0]
+    months = yearData[1]
     yearGroup = "<li class='nav-header'>#{year}</li>"
     $.each months, (month, tweets) ->
       yearGroup += "<li><a href='##{year}-#{month}'>#{month}</a></li>"
